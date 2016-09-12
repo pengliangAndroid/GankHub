@@ -6,4 +6,9 @@
 
     <string name="action_settings">Settings</string>
     <string name="app_menu">干货在手，万事精彩</string>
+
+    <string name="daily_android_tag_tv">Android</string>
+    <string name="daily_ios_tag_tv">iOS</string>
+    <string name="daily_js_tag_tv">前端</string>
+
 </resources>

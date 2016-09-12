@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.wstrong.mygank.config.DataType;
+import com.wstrong.mygank.views.CommonFragment;
 import com.wstrong.mygank.views.HomeFragment;
 
 import java.util.ArrayList;
@@ -17,17 +19,19 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
     private List<Fragment> mFragmentList;
 
 
-    private final String[] mTabNames = new String[]{
-            "热门","福利","Android","IOS",
-            "前端","休息视频","拓展资源","App"
-    };
+    private String[] mTabNames;
 
     public MainPagerAdapter(FragmentManager manager){
         super(manager);
 
+        mTabNames = DataType.getAllNames();
+
         mFragmentList = new ArrayList<>();
-        for (int i = 0; i < mTabNames.length; i++) {
-            mFragmentList.add(HomeFragment.newInstance());
+
+        mFragmentList.add(HomeFragment.newInstance(DataType.ANDROID.getName()));
+
+        for (int i = 1; i < mTabNames.length; i++) {
+            mFragmentList.add(CommonFragment.newInstance());
         }
     }
 

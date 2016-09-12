@@ -49,25 +49,24 @@ public abstract class BaseDrawerLayoutActivity extends BaseToolbarActivity {
 
     protected HashMap<Integer, MenuItem> mMenuItems;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (this.getNavigationItemSelectedListener() != null) {
-            this.mNavigationView.setNavigationItemSelectedListener(
+        if (getNavigationItemSelectedListener() != null) {
+            mNavigationView.setNavigationItemSelectedListener(
                     getNavigationItemSelectedListener());
         }
 
-        this.mDrawerLayout.setDrawerListener(new EasyDrawerListener());
+        mDrawerLayout.setDrawerListener(new EasyDrawerListener());
 
         // 初始化MenuItems
-        this.mMenuItems = new HashMap<>();
+        mMenuItems = new HashMap<>();
         int[] menuItemIds = this.getMenuItemIds();
         if (menuItemIds.length > 0) {
             for (int id : menuItemIds) {
-                MenuItem menuItem = this.mNavigationView.getMenu().findItem(id);
-                if (menuItem != null) this.mMenuItems.put(id, menuItem);
+                MenuItem menuItem = mNavigationView.getMenu().findItem(id);
+                if (menuItem != null) mMenuItems.put(id, menuItem);
             }
         }
 

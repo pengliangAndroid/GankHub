@@ -20,21 +20,16 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getLayoutId());
+        this.setContentView(getLayoutId());
 
         ButterKnife.bind(this);
 
-        initToolbar(savedInstanceState);
-        initViews(savedInstanceState);
-        initData();
-        initListener();
+        this.initToolbar(savedInstanceState);
+        this.initViews(savedInstanceState);
+        this.initData();
+        this.initListener();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //ButterKnife.unbind(this);
-    }
 
     protected abstract int getLayoutId();
 

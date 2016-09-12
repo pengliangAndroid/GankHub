@@ -7,12 +7,18 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.orhanobut.logger.Logger;
 import com.wstrong.mygank.Constants;
 import com.wstrong.mygank.R;
 import com.wstrong.mygank.adapter.MainPagerAdapter;
 import com.wstrong.mygank.base.BaseDrawerLayoutActivity;
+import com.wstrong.mygank.config.Config;
+import com.wstrong.mygank.utils.rx.RxBus;
 
 import butterknife.Bind;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 public class MainActivity extends BaseDrawerLayoutActivity {
 
@@ -23,6 +29,9 @@ public class MainActivity extends BaseDrawerLayoutActivity {
     ViewPager mViewPager;
 
     MainPagerAdapter mPagerAdapter;
+
+    Observable mRxErrorMsg;
+
 
     @Override
     protected int getLayoutId() {
@@ -47,10 +56,23 @@ public class MainActivity extends BaseDrawerLayoutActivity {
 
     @Override
     protected void initListener() {
+        mRxErrorMsg = RxBus.get().register(Config.TAG_SERVER_ERROR, String.class);
+        mRxErrorMsg.observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<String>() {
+                    @Override
+                    public void call(String s) {
+                        Logger.d("mRxErrorMsg:"+s);
+                    }
+                });
 
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Logger.d("MainActivity onDestroy.");
+    }
+
     protected NavigationView.OnNavigationItemSelectedListener getNavigationItemSelectedListener() {
         return new NavigationView.OnNavigationItemSelectedListener() {
             @Override

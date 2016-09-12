@@ -3,4 +3,12 @@
     <declare-styleable name="MultiSwipeRefreshLayout">
         <attr name="foreground" format="reference" />
     </declare-styleable>
+
+    <declare-styleable name="RatioImageView">
+        <attr name="imageRatio" format="float" />
+        <attr name="imageRatioType">
+            <enum name="widthHeight" value="1266" />
+            <enum name="heightWidth" value="2266" />
+        </attr>
+    </declare-styleable>
 </resources>
