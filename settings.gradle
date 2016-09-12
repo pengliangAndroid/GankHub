@@ -1,1 +1,1 @@
-include ':app', ':adapter-lib', ':ptr-lib'
+include ':app', ':adapter-lib'

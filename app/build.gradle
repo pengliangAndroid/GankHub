@@ -44,5 +44,4 @@ dependencies {
     // other
     compile 'com.orhanobut:logger:1.15'
     compile project(':adapter-lib')
-    compile project(':ptr-lib')
 }
