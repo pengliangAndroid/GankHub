@@ -3,7 +3,7 @@
 
 
 ###主页ToolBar+TabLayout+ViewPager  
-![image](https://github.com/pengliangAndroid/GankHub/image/image_1.jpg)  
+![image](https://github.com/pengliangAndroid/GankHub/blob/master/image/image_1.jpg)  
 
 ###DrawerLayout+NavigationView
-![image](https://github.com/pengliangAndroid/GankHub/image/image_2.jpg)  
+![image](https://github.com/pengliangAndroid/GankHub/blob/master/image/image_2.jpg)  
