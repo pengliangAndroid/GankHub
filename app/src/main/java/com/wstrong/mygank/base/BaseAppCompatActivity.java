@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Toast;
 
@@ -29,7 +28,6 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity  {
         this.initData();
         this.initListener();
     }
-
 
     protected abstract int getLayoutId();
 
@@ -65,7 +63,7 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity  {
 
     public void showToast(String message) {
         Toast toast = Toast.makeText(getContext(),message,Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER,0,0);
+        //toast.setGravity(Gravity.CENTER,0,0);
         toast.show();
     }
 

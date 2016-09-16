@@ -5,10 +5,26 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="action_gank">前往gank.io主页</string>
+    <string name="action_github">热门Github仓库</string>
     <string name="app_menu">干货在手，万事精彩</string>
 
     <string name="daily_android_tag_tv">Android</string>
     <string name="daily_ios_tag_tv">iOS</string>
     <string name="daily_js_tag_tv">前端</string>
+
+    <string name="menu_web_refresh">重新加载</string>
+    <string name="menu_web_copy">复制链接</string>
+    <string name="menu_web_share">分享链接</string>
+    <string name="menu_web_horizontal">横屏显示</string>
+    <string name="menu_web_vertical">竖屏显示</string>
+
+
+    <string name="menu_picture_download">下载图片</string>
+    <string name="menu_picture_copy">复制链接</string>
+    <string name="menu_picture_share">分享出去</string>
+
+    <string name="copy_success">复制链接成功</string>
+
 
 </resources>

@@ -60,8 +60,9 @@ public class ApiConnection {
         mRetrofit = new Retrofit.Builder().client(mOkHttpClient)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(mGson))
-                .baseUrl(Constants.BASE_URL_NEW)
+                .baseUrl(Constants.BASE_API_URL)
                 .build();
+
     }
 
     public Gson getGson() {

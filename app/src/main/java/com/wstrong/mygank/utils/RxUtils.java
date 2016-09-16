@@ -60,7 +60,6 @@ public class RxUtils {
             public Observable<T> call(Observable<T> observable) {
                 return observable
                         .subscribeOn(Schedulers.io())
-                        .unsubscribeOn(Schedulers.computation())
                         .observeOn(AndroidSchedulers.mainThread());
             }
         };

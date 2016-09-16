@@ -1,11 +1,13 @@
 package com.wstrong.mygank.data.model;
 
-/**
- * Created by pengl on 2016/9/12.
- */
-public class GankDataWrapper extends GankData {
+import java.io.Serializable;
 
-    private String imageUrl;
+/**
+ * Created by pengl on 2016/9/16.
+ */
+public class GankDailyData extends GankData implements Serializable {
+
+   private String imageUrl;
 
     public String getImageUrl() {
         return imageUrl;

@@ -19,7 +19,6 @@ public abstract class BaseSwipeRefreshLayoutActivity extends BaseToolbarActivity
 
     private boolean refreshStatus = false;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

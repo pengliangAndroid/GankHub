@@ -1,31 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-
-  {EasyGank}  Copyright (C) {2015}  {CaMnter}
-
-  This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
-  This is free software, and you are welcome to redistribute it
-  under certain conditions; type `show c' for details.
-
-  The hypothetical commands `show w' and `show c' should show the appropriate
-  parts of the General Public License.  Of course, your program's commands
-  might be different; for a GUI interface, you would use an "about box".
-
-  You should also get your employer (if you work as a programmer) or school,
-  if any, to sign a "copyright disclaimer" for the program, if necessary.
-  For more information on this, and how to apply and follow the GNU GPL, see
-  <http://www.gnu.org/licenses/>.
-
-  The GNU General Public License does not permit incorporating your program
-  into proprietary programs.  If your program is a subroutine library, you
-  may consider it more useful to permit linking proprietary applications with
-  the library.  If this is what you want to do, use the GNU Lesser General
-  Public License instead of this License.  But first, please read
-  <http://www.gnu.org/philosophy/why-not-lgpl.html>.
-
--->
-
+<?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/CardTheme"
+    style="@style/CardViewStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -36,7 +11,7 @@
         android:padding="12dp">
 
         <TextView
-            android:id="@+id/data_title_tv"
+            android:id="@+id/tv_data_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -48,10 +23,10 @@
             android:textSize="@dimen/item_title_tv"/>
 
         <TextView
-            android:id="@+id/data_via_tv"
+            android:id="@+id/tv_data_via"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/data_title_tv"
+            android:layout_below="@id/tv_data_title"
             android:layout_marginTop="9dp"
             android:paddingEnd="4dp"
             android:paddingLeft="0dp"
@@ -62,15 +37,15 @@
             android:typeface="serif"/>
 
         <LinearLayout
-            android:id="@+id/data_tag_ll"
+            android:id="@+id/ll_data_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/data_via_tv"
+            android:layout_below="@id/tv_data_via"
             android:layout_marginTop="12dp"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/data_tag_tv"
+                android:id="@+id/tv_data_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
@@ -83,10 +58,10 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/data_date_tv"
+            android:id="@+id/tv_data_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/data_tag_ll"
+            android:layout_alignBottom="@id/ll_data_tag"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:text="222"

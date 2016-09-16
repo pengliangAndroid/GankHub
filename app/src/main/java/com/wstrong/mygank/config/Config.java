@@ -9,4 +9,7 @@ public class Config {
     public static final String TAG_SERVER_ERROR = "SERVER_ERROR";
     public static final String TAG_DATA_EMPTY = "DATA_EMPTY";
     public static final String TAG_NOT_NETWORK = "NOT_NETWORK";
+
+    public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
+
 }

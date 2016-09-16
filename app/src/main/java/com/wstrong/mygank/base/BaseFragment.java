@@ -24,6 +24,7 @@
 
 package com.wstrong.mygank.base;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -31,6 +32,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.wstrong.mygank.utils.LogUtil;
+
+import butterknife.ButterKnife;
 
 /**
  * Description：BaseFragment
@@ -38,22 +44,8 @@ import android.view.ViewGroup;
 public abstract class BaseFragment extends Fragment {
 
     protected View rootView;
-
-    protected BaseAppCompatActivity baseActivity;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        baseActivity = (BaseAppCompatActivity) context;
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-
-        baseActivity = null;
-    }
+    protected Context context;
+    protected ProgressDialog progressDialog;
 
     /**
      * @param inflater The LayoutInflater object that can be used to inflate
@@ -73,11 +65,8 @@ public abstract class BaseFragment extends Fragment {
             this.rootView = inflater.inflate(this.getLayoutId(), container, false);
         }
 
-        if (this.rootView.getParent() != null) {
-            ViewGroup parent = (ViewGroup) this.rootView.getParent();
-            parent.removeView(this.rootView);
-        }
-
+        context = getActivity();
+        ButterKnife.bind(this,rootView);//绑定framgent
         this.initViews(this.rootView, savedInstanceState);
         this.initData();
         this.initListeners();
@@ -89,8 +78,26 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        ButterKnife.unbind(this);
+        if (this.rootView.getParent() != null) {
+            ViewGroup parent = (ViewGroup) this.rootView.getParent();
+            parent.removeView(this.rootView);
+        }
     }
 
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        LogUtil.d("Fragment onAttach");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        LogUtil.d("Fragment onDetach");
+    }
 
     /**
      * Fill in layout id
@@ -130,14 +137,6 @@ public abstract class BaseFragment extends Fragment {
     }
 
 
-    public void showToast(String message) {
-        baseActivity.showToast(message);
-    }
-
-    public void showToast(int messageId) {
-        showToast(getString(messageId));
-    }
-
     public void showProgressDialog() {
         showProgressDialog("");
     }
@@ -147,15 +146,24 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public void showProgressDialog(String message, boolean cancelable) {
-        baseActivity.showProgressDialog(message,cancelable);
+        progressDialog = ProgressDialog.show(context,"",message);
+        progressDialog.setCancelable(cancelable);
     }
 
     public void stopProgressDialog() {
-        baseActivity.stopProgressDialog();
+        if(progressDialog != null)
+            progressDialog.dismiss();
+    }
+
+    public void showToast(String message) {
+        Toast toast = Toast.makeText(context,message,Toast.LENGTH_SHORT);
+        //toast.setGravity(Gravity.CENTER,0,0);
+        toast.show();
+    }
+
+    public void showToast(int messageId) {
+        showToast(getString(messageId));
     }
 
 
-    protected BaseAppCompatActivity getBaseActivity(){
-        return baseActivity;
-    }
 }

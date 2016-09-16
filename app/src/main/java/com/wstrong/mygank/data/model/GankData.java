@@ -3,18 +3,35 @@ package com.wstrong.mygank.data.model;
 import java.io.Serializable;
 
 /**
- * Created by pengl on 2016/9/11.
+ * Created by pengl on 2016/9/16.
  */
-public class GankData implements Serializable{
+public class GankData implements Serializable {
 
-
+    private String _id;
+    private String createdAt;
     private String desc;
-    private String ganhuo_id;
     private String publishedAt;
-    private String readability;
+    private String source;
     private String type;
     private String url;
+    private boolean used;
     private String who;
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
 
     public String getDesc() {
         return desc;
@@ -22,14 +39,6 @@ public class GankData implements Serializable{
 
     public void setDesc(String desc) {
         this.desc = desc;
-    }
-
-    public String getGanhuo_id() {
-        return ganhuo_id;
-    }
-
-    public void setGanhuo_id(String ganhuo_id) {
-        this.ganhuo_id = ganhuo_id;
     }
 
     public String getPublishedAt() {
@@ -40,12 +49,12 @@ public class GankData implements Serializable{
         this.publishedAt = publishedAt;
     }
 
-    public String getReadability() {
-        return readability;
+    public String getSource() {
+        return source;
     }
 
-    public void setReadability(String readability) {
-        this.readability = readability;
+    public void setSource(String source) {
+        this.source = source;
     }
 
     public String getType() {
@@ -64,6 +73,14 @@ public class GankData implements Serializable{
         this.url = url;
     }
 
+    public boolean isUsed() {
+        return used;
+    }
+
+    public void setUsed(boolean used) {
+        this.used = used;
+    }
+
     public String getWho() {
         return who;
     }
@@ -71,4 +88,5 @@ public class GankData implements Serializable{
     public void setWho(String who) {
         this.who = who;
     }
+
 }

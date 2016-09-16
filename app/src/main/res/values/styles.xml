@@ -21,7 +21,7 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
-    <style name="CardTheme">
+    <style name="CardViewStyle">
         <item name="contentPadding">0dp</item>
         <item name="cardCornerRadius">@dimen/card_corner_radius</item>
         <item name="cardPreventCornerOverlap">false</item>

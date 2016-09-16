@@ -20,7 +20,6 @@ public class BaseRestApi {
     public static final int DEFAULT_DATA_SIZE = 10;
     public static final int DEFAULT_DAILY_SIZE = 15;
 
-    public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 
 
     /**

@@ -15,17 +15,8 @@ public class GankDataResp implements Serializable {
      * results : []
      */
 
-    private int count;
     private boolean error;
     private List<GankData> results;
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
 
     public boolean isError() {
         return error;

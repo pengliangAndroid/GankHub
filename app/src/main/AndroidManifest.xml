@@ -7,21 +7,31 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
+        android:name=".KApplication"
         android:allowBackup="true"
         android:icon="@mipmap/studio_icon"
         android:label="@string/app_name"
-        android:name=".KApplication"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".views.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity android:name=".views.WebViewActivity"
+                  android:configChanges="orientation|screenSize"
+            >
+        </activity>
+        <activity android:name=".views.DataDetailActivity"
+            android:screenOrientation="portrait"
+            >
         </activity>
     </application>
 

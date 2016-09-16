@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#ff0aa284</color>
     <color name="colorPrimaryDark">#ff0aa284</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#ff0aa284</color>
     <color name="colorWhite">#ffffffff</color>
     <color name="colorCE">#cecece</color>
 
@@ -17,4 +17,6 @@
     <color name="common_github_tag_bg">#ff000000</color>
     <color name="common_title_tv">#ff000000</color>
     <color name="common_item_via">#ffA8A8A8</color>
+
+
 </resources>

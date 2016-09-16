@@ -1,9 +1,10 @@
 package com.wstrong.mygank.data.remote;
 
 import com.wstrong.mygank.config.Config;
+import com.wstrong.mygank.data.model.GankDailyDataResp;
 import com.wstrong.mygank.data.model.GankData;
 import com.wstrong.mygank.data.model.GankDataResp;
-import com.wstrong.mygank.utils.RxUtils;
+import com.wstrong.mygank.data.model.GankSearchDataResp;
 import com.wstrong.mygank.utils.rx.RxBus;
 
 import java.util.List;
@@ -22,8 +23,8 @@ public class DataRestApiImpl extends BaseRestApi{
         mDataRestService = ApiConnection.getInstance().getRetrofit().create(DataRestService.class);
     }
 
-    public Observable<List<GankData>> getDailyData(String category, int pageSize, int page){
-        return mDataRestService.getData(category,pageSize,page)
+    public Observable<List<GankData>> getCategoryData(String category, int pageSize, int page){
+        return mDataRestService.getCategoryData(category,pageSize,page)
                 .map(new Func1<GankDataResp, List<GankData>>() {
                     @Override
                     public List<GankData> call(GankDataResp resp) {
@@ -32,11 +33,17 @@ public class DataRestApiImpl extends BaseRestApi{
                             RxBus.get().post(Config.SERVER_ERROR,"server error.");
                             return null;
                         }
-
                         return resp.getResults();
                     }
-                })
-                .compose(RxUtils.<List<GankData>>applyIOToMainThreadSchedulers());
+                });
+    }
+
+    public Observable<GankDailyDataResp> getDailyData(int year, int month, int day){
+        return mDataRestService.getDailyData(year,month,day);
+    }
+
+    public Observable<GankSearchDataResp> searchData(String keyword,String category,int pageSize,int page){
+        return mDataRestService.searchData(keyword,category,pageSize,page);
     }
 
 }

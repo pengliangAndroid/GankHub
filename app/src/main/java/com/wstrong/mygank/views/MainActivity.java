@@ -7,12 +7,12 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.orhanobut.logger.Logger;
 import com.wstrong.mygank.Constants;
 import com.wstrong.mygank.R;
 import com.wstrong.mygank.adapter.MainPagerAdapter;
 import com.wstrong.mygank.base.BaseDrawerLayoutActivity;
 import com.wstrong.mygank.config.Config;
+import com.wstrong.mygank.utils.LogUtil;
 import com.wstrong.mygank.utils.rx.RxBus;
 
 import butterknife.Bind;
@@ -32,7 +32,6 @@ public class MainActivity extends BaseDrawerLayoutActivity {
 
     Observable mRxErrorMsg;
 
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
@@ -40,7 +39,6 @@ public class MainActivity extends BaseDrawerLayoutActivity {
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
-
     }
 
     @Override
@@ -48,7 +46,7 @@ public class MainActivity extends BaseDrawerLayoutActivity {
         mPagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
 
         mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-
+        mViewPager.setOffscreenPageLimit(mPagerAdapter.getCount() - 1);
         mViewPager.setAdapter(mPagerAdapter);
 
         mTabLayout.setupWithViewPager(mViewPager);
@@ -61,7 +59,7 @@ public class MainActivity extends BaseDrawerLayoutActivity {
                 .subscribe(new Action1<String>() {
                     @Override
                     public void call(String s) {
-                        Logger.d("mRxErrorMsg:"+s);
+                        LogUtil.d("mRxErrorMsg:"+s);
                     }
                 });
 
@@ -70,7 +68,7 @@ public class MainActivity extends BaseDrawerLayoutActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Logger.d("MainActivity onDestroy.");
+        LogUtil.d("MainActivity onDestroy.");
     }
 
     protected NavigationView.OnNavigationItemSelectedListener getNavigationItemSelectedListener() {
@@ -111,7 +109,11 @@ public class MainActivity extends BaseDrawerLayoutActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_settings:
+            case R.id.action_gank:
+                WebViewActivity.toUrl(this, Constants.BASE_URL_SITE);
+                return true;
+            case R.id.action_github:
+                WebViewActivity.toUrl(this, Constants.GITHUB_TRENDING);
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -34,15 +34,20 @@ import android.view.View;
 
 import com.wstrong.mygank.R;
 
-import butterknife.Bind;
-
 public abstract class BaseToolbarActivity extends BaseAppCompatActivity {
 
-    @Bind(R.id.toolbar) protected Toolbar mToolbar;
-    @Bind(R.id.app_layout) protected AppBarLayout mAppBarLayout;
+    //@Bind(R.id.toolbar) protected Toolbar mToolbar;
+    //@Bind(R.id.app_layout) protected AppBarLayout mAppBarLayout;
+    protected Toolbar mToolbar;
+
+    protected AppBarLayout mAppBarLayout;
 
     protected ActionBarHelper mActionBarHelper;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     /**
      * Initialize the toolbar in the layout
@@ -51,6 +56,9 @@ public abstract class BaseToolbarActivity extends BaseAppCompatActivity {
      */
     @Override
     protected void initToolbar(Bundle savedInstanceState) {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mAppBarLayout = (AppBarLayout) findViewById(R.id.app_layout);
+
         this.initToolbarHelper();
     }
 
