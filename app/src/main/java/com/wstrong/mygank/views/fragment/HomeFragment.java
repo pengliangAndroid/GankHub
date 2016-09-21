@@ -12,15 +12,19 @@ import android.widget.ProgressBar;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
-import com.wstrong.mygank.Constants;
 import com.wstrong.mygank.R;
 import com.wstrong.mygank.adapter.HomeAdapter;
 import com.wstrong.mygank.adapter.MultiDataItem;
+import com.wstrong.mygank.config.Config;
+import com.wstrong.mygank.data.model.GankDailyData;
 import com.wstrong.mygank.data.model.GankData;
 import com.wstrong.mygank.presenter.HomePresenter;
 import com.wstrong.mygank.presenter.iview.HomeView;
 import com.wstrong.mygank.utils.DeviceUtils;
 import com.wstrong.mygank.utils.LogUtil;
+import com.wstrong.mygank.utils.rx.RxBus;
+import com.wstrong.mygank.views.MainActivity;
+import com.wstrong.mygank.views.PictureActivity;
 import com.wstrong.mygank.views.WebViewActivity;
 import com.wstrong.mygank.widget.BorderDividerItemDecoration;
 import com.wstrong.mygank.widget.CustomLinearLayoutManager;
@@ -30,6 +34,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import de.keyboardsurfer.android.widget.crouton.Configuration;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 
 /**
@@ -39,6 +46,8 @@ public class HomeFragment extends LazyFragment implements HomeView, SwipeRefresh
     private static final String ARGUMENT_CATEGORY = "ARGUMENT_CATEGORY";
     private static final String ARGUMENT_MULTITYPE = "ARGUMENT_MULTITYPE";
 
+    @Bind(R.id.view_placeholder)
+    View mViewLayout;
     @Bind(R.id.recycler_view)
     RecyclerView mRecyclerView;
     @Bind(R.id.swipe_refresh_layout)
@@ -54,7 +63,9 @@ public class HomeFragment extends LazyFragment implements HomeView, SwipeRefresh
 
     private List<MultiDataItem> mDataList;
 
-    private View noMoreView, errorView, emptyView;
+    //private GankDailyData mDailyData;
+
+    private View noMoreView, errorView, emptyView,loadingView;
 
     private int mMultiType;
 
@@ -95,6 +106,7 @@ public class HomeFragment extends LazyFragment implements HomeView, SwipeRefresh
         noMoreView = inflater.inflate(R.layout.no_more_layout, (ViewGroup) mRecyclerView.getParent(), false);
         errorView = inflater.inflate(R.layout.error_view, (ViewGroup) mRecyclerView.getParent(), false);
         emptyView = inflater.inflate(R.layout.empty_view, (ViewGroup) mRecyclerView.getParent(), false);
+        loadingView = inflater.inflate(R.layout.def_loading, (ViewGroup) mRecyclerView.getParent(), false);
 
         initAdapter();
     }
@@ -106,6 +118,7 @@ public class HomeFragment extends LazyFragment implements HomeView, SwipeRefresh
         mAdapter.openLoadAnimation();
         mAdapter.isFirstOnly(true);
         mAdapter.openLoadMore(HomePresenter.PAGE_SIZE);
+        mAdapter.setLoadingView(loadingView);
 
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -128,7 +141,7 @@ public class HomeFragment extends LazyFragment implements HomeView, SwipeRefresh
         mRecyclerView.addOnItemTouchListener(new SimpleClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if(mMultiType == 3){
+                if(mMultiType == 3 || mMultiType == 1){
                     GankData dataItem = mAdapter.getItem(position).getGankData();
                     WebViewActivity.toUrl(getActivity(),dataItem.getUrl(),dataItem.getDesc());
                     //DataDetailActivity.toActivity(getActivity(),dataItem.getReadability());
@@ -142,6 +155,21 @@ public class HomeFragment extends LazyFragment implements HomeView, SwipeRefresh
 
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                GankData dataItem = mAdapter.getItem(position).getGankData();
+                if(view.getId() == R.id.daily_iv || view.getId() == R.id.welfare_iv) {
+                    String url;
+
+                    if (mMultiType == 1){
+                        url = dataItem.getImageUrl();
+                    }else{
+                        url = dataItem.getUrl();
+                    }
+
+                    LogUtil.d("url:"+url);
+
+                    PictureActivity.startActivityByActivityOptionsCompat(getActivity(),
+                            dataItem.getDesc(),url,dataItem.getDesc(),view);
+                }
             }
 
             @Override
@@ -171,8 +199,8 @@ public class HomeFragment extends LazyFragment implements HomeView, SwipeRefresh
      */
     private void loadNextPageData() {
         if(mMultiType == 1){
-            //mHomePresenter.getGankDataWithImage();
-            onGetDataFail(Constants.UNKNOWN_GET_ERROR);
+            //mHomePresenter.getGankDailyData();
+            mHomePresenter.getGankDataWithImage();
         }else if(mMultiType == 2){
             mHomePresenter.getGankData();
         }else if(mMultiType == 3){
@@ -189,12 +217,16 @@ public class HomeFragment extends LazyFragment implements HomeView, SwipeRefresh
 
     @Override
     public void onRefresh() {
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
-        }, 1500);
+        if(mMultiType != 1) {
+            mHomePresenter.refreshGankData(mDataList);
+        }else{
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    onGetDataSuccess(new ArrayList<GankData>());
+                }
+            },1500);
+        }
     }
 
     /**
@@ -211,6 +243,7 @@ public class HomeFragment extends LazyFragment implements HomeView, SwipeRefresh
         if (this.mSwipeRefreshLayout != null) {
             this.mSwipeRefreshLayout.setOnRefreshListener(this);
         }
+        mSwipeRefreshLayout.setEnabled(false);
     }
 
 
@@ -229,31 +262,31 @@ public class HomeFragment extends LazyFragment implements HomeView, SwipeRefresh
 
     @Override
     public void onGetDataSuccess(List<GankData> dataList) {
-        mPbLoading.setVisibility(View.GONE);
-        mRecyclerView.setVisibility(View.VISIBLE);
+        setViewVisible();
 
         List<MultiDataItem> tmpList = new ArrayList<>();
         for (int i = 0; i < dataList.size(); i++) {
             tmpList.add(new MultiDataItem(mMultiType,dataList.get(i)));
         }
 
-        mAdapter.addData(tmpList);
-        mSwipeRefreshLayout.setRefreshing(false);
-        System.out.println(tmpList.size());
+        LogUtil.d("load data size:"+tmpList.size());
+        if(dataList.size() == 0){
+            /*mAdapter.setEmptyView(emptyView);
+            mAdapter.notifyItemChanged(0);*/
+        }else{
+            mAdapter.addData(tmpList);
+        }
     }
 
     @Override
     public void onGetDataFail(String errorMsg) {
         showToast(errorMsg);
 
-        if(mPbLoading.getVisibility() == View.VISIBLE)
-            mPbLoading.setVisibility(View.GONE);
-
-        if(mRecyclerView.getVisibility() == View.GONE)
-            mRecyclerView.setVisibility(View.VISIBLE);
+        setViewVisible();
 
         if(mDataList.size() == 0) {
-            mAdapter.setEmptyView(errorView);
+            /*mAdapter.setEmptyView(errorView);
+            mAdapter.notifyItemChanged(0);*/
         }else{
             mAdapter.showLoadMoreFailedView();
         }
@@ -261,5 +294,79 @@ public class HomeFragment extends LazyFragment implements HomeView, SwipeRefresh
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
+    @Override
+    public void onGetDailyDataSuccess(GankDailyData dataList) {
+        LogUtil.d(dataList.toString());
+    }
 
+    @Override
+    public void onGetDailyDataFail(String errorMsg) {
+        onGetDataFail(errorMsg);
+    }
+
+    private void setViewVisible() {
+        if(mPbLoading.getVisibility() == View.VISIBLE)
+            mPbLoading.setVisibility(View.GONE);
+
+        if(mRecyclerView.getVisibility() == View.GONE)
+            mRecyclerView.setVisibility(View.VISIBLE);
+
+        mSwipeRefreshLayout.setEnabled(true);
+    }
+
+    @Override
+    public void onRefreshDataSuccess(List<GankData> dataList) {
+        LogUtil.d("refresh data size:"+dataList.size());
+
+        mSwipeRefreshLayout.setRefreshing(false);
+        if(dataList.size() == 0){
+            showUpdateNumInfo(dataList.size());
+        }else{
+            List<MultiDataItem> tmpList = new ArrayList<>();
+            for (int i = 0; i < dataList.size(); i++) {
+                tmpList.add(new MultiDataItem(mMultiType,dataList.get(i)));
+            }
+            tmpList.addAll(mAdapter.getData());
+
+            mAdapter.setNewData(tmpList);
+
+            showUpdateNumInfo(dataList.size());
+        }
+    }
+
+    private void showUpdateNumInfo(int size) {
+        String str;
+
+        if(size == 0){
+            str = "没有更新";
+        }else{
+            str = "有"+size+"条更新";
+        }
+
+        //6.0显示不出来，待解决
+        showCrouton(str);
+    }
+
+    @Override
+    public void onRefreshDataFail(String errorMsg) {
+        mSwipeRefreshLayout.setRefreshing(false);
+        showToast(errorMsg);
+        mAdapter.showLoadMoreFailedView();
+    }
+
+    private void sendMessage(String msg){
+        RxBus.get().post(Config.TAG_SHOW_VIEW,msg);
+    }
+
+    public void showCrouton(String content) {
+        Style style =  new Style.Builder()
+                .setHeight(DeviceUtils.dp2px(getActivity(),32))
+                .setBackgroundColorValue(getResources().getColor(R.color.core_color_light))
+                .build();
+
+        Crouton crouton = Crouton.makeText(((MainActivity)getActivity()),content,style,R.id.rl_main);
+        Configuration configuration = new Configuration.Builder().setDuration(1500).build();
+        crouton.setConfiguration(configuration);
+        crouton.show();
+    }
 }

@@ -1,6 +1,6 @@
 package com.wstrong.mygank.data.remote;
 
-import com.wstrong.mygank.data.model.GankDailyDataResp;
+import com.wstrong.mygank.data.model.GankDailyData;
 import com.wstrong.mygank.data.model.GankDataResp;
 import com.wstrong.mygank.data.model.GankSearchDataResp;
 
@@ -34,8 +34,8 @@ public interface DataRestService {
      * @return
      */
     @GET("day/{year}/{month}/{day}")
-    Observable<GankDailyDataResp> getDailyData(@Path("year") int year,
-                                               @Path("month") int month, @Path("day") int day);
+    Observable<GankDailyData> getDailyData(@Path("year") int year,
+                                           @Path("month") int month, @Path("day") int day);
 
     /**
      * 搜索分类数据

@@ -4,6 +4,7 @@
               android:layout_height="wrap_content"
               android:background="@mipmap/left_head_1"
               android:orientation="vertical"
+               android:gravity="bottom"
               android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
    <!-- <ImageView

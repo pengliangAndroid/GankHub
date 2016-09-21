@@ -18,14 +18,18 @@ import android.widget.ProgressBar;
 
 import com.wstrong.mygank.R;
 import com.wstrong.mygank.base.BaseToolbarActivity;
+import com.wstrong.mygank.data.model.Collection;
+import com.wstrong.mygank.presenter.WebViewPresenter;
+import com.wstrong.mygank.presenter.iview.WebViewView;
 import com.wstrong.mygank.utils.DeviceUtils;
 import com.wstrong.mygank.utils.IntentUtils;
+import com.wstrong.mygank.utils.LogUtil;
 import com.wstrong.mygank.utils.ShareUtils;
 import com.wstrong.mygank.utils.WebViewUtils;
 
 import butterknife.Bind;
 
-public class WebViewActivity extends BaseToolbarActivity {
+public class WebViewActivity extends BaseToolbarActivity implements WebViewView{
 
     private static final String EXTRA_URL = "EXTRA_URL";
     private static final String EXTRA_TITLE = "EXTRA_TITLE";
@@ -36,6 +40,11 @@ public class WebViewActivity extends BaseToolbarActivity {
     @Bind(R.id.web_view)
     WebView mWebView;
 
+    WebViewPresenter mPresenter;
+
+    private boolean isExists;
+
+    private Collection mCollection;
     /**
      * @param context Any context
      * @param url A valid url to navigate to
@@ -78,6 +87,7 @@ public class WebViewActivity extends BaseToolbarActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mPresenter.detachView();
         mWebView.destroy();
     }
 
@@ -155,11 +165,17 @@ public class WebViewActivity extends BaseToolbarActivity {
 
     @Override
     protected void initData() {
+        mPresenter = new WebViewPresenter();
+        mPresenter.attachView(this);
+        mPresenter.getCollection(getUrl());
     }
+
 
     @Override
     protected void initListener() {
     }
+
+    MenuItem mMenuItem;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -168,8 +184,23 @@ public class WebViewActivity extends BaseToolbarActivity {
     }
 
     @Override
+    //这里getItem()这个却是通过item的索引
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        mMenuItem = menu.findItem(R.id.menu_web_collection);
+        changeMenuItem(isExists);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
+            case R.id.menu_web_collection:
+                if(isExists){
+                    mPresenter.deleteCollection(mCollection.getId());
+                }else{
+                    mPresenter.saveCollection(getUrl(),getUrlTitle());
+                }
+                break;
             case R.id.menu_web_refresh:
                 mWebView.reload();
                 break;
@@ -254,4 +285,55 @@ public class WebViewActivity extends BaseToolbarActivity {
         return IntentUtils.getBooleanExtra(getIntent(),EXTRA_TYPE,false);
     }
 
+    @Override
+    public void onGetCollectionSuccess(Collection collection) {
+        LogUtil.d("collection:"+collection);
+        if(collection == null){
+            changeMenuItem(false);
+        }else{
+            mCollection = collection;
+            changeMenuItem(true);
+        }
+    }
+
+    private void changeMenuItem(boolean hasCollection) {
+        isExists = hasCollection;
+        if(mMenuItem == null)
+            return;
+
+        if(isExists) {
+            mMenuItem.setTitle(getString(R.string.menu_web_cancel_collection));
+        }else{
+            mMenuItem.setTitle(getString(R.string.menu_web_collection));
+        }
+    }
+
+    @Override
+    public void onGetCollectionFail(String error) {
+        showToast(error);
+    }
+
+    @Override
+    public void onSaveCollectionSuccess(Collection collection) {
+        LogUtil.d("save collection:"+collection);
+        showToast(getString(R.string.add_collection_tip));
+        changeMenuItem(true);
+        mCollection = collection;
+    }
+
+    @Override
+    public void onSaveCollectionFail(String error) {
+        showToast(error);
+    }
+
+    @Override
+    public void onDeleteCollectionSuccess() {
+        showToast(getString(R.string.cancel_collection_tip));
+        changeMenuItem(false);
+    }
+
+    @Override
+    public void onDeleteCollectionFail(String error) {
+        showToast(error);
+    }
 }

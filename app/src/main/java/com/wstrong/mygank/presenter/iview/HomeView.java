@@ -1,6 +1,7 @@
 package com.wstrong.mygank.presenter.iview;
 
 import com.wstrong.mygank.base.mvp.MvpView;
+import com.wstrong.mygank.data.model.GankDailyData;
 import com.wstrong.mygank.data.model.GankData;
 
 import java.util.List;
@@ -15,4 +16,14 @@ public interface HomeView extends MvpView {
     void onGetDataSuccess(List<GankData> dataList);
 
     void onGetDataFail(String errorMsg);
+
+    void onGetDailyDataSuccess(GankDailyData dataList);
+
+    void onGetDailyDataFail(String errorMsg);
+
+    void onRefreshDataSuccess(List<GankData> dataList);
+
+    void onRefreshDataFail(String errorMsg);
+
+
 }

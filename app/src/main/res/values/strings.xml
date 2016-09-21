@@ -13,6 +13,8 @@
     <string name="daily_ios_tag_tv">iOS</string>
     <string name="daily_js_tag_tv">前端</string>
 
+    <string name="menu_web_collection">添加收藏</string>
+    <string name="menu_web_cancel_collection">取消收藏</string>
     <string name="menu_web_refresh">重新加载</string>
     <string name="menu_web_copy">复制链接</string>
     <string name="menu_web_share">分享链接</string>
@@ -21,10 +23,13 @@
 
 
     <string name="menu_picture_download">下载图片</string>
-    <string name="menu_picture_copy">复制链接</string>
+    <string name="menu_picture_copy">复制图片链接</string>
     <string name="menu_picture_share">分享出去</string>
 
     <string name="copy_success">复制链接成功</string>
+    <string name="share_image">分享图片</string>
+    <string name="cancel_collection_tip">已取消收藏</string>
+    <string name="add_collection_tip">已添加收藏</string>
 
 
 </resources>

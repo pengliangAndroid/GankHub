@@ -31,4 +31,5 @@ public class MultiDataItem implements MultiItemEntity {
     public int getItemType() {
         return itemType;
     }
+
 }

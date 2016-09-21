@@ -102,6 +102,7 @@ public class HomeAdapter extends BaseMultiItemQuickAdapter<MultiDataItem> {
             GlideUtils.display(imageView, data.getUrl());
         }
 
+        helper.addOnClickListener(R.id.welfare_iv);
     }
 
     private void convertTextAndImage(BaseViewHolder helper, MultiDataItem item) {
@@ -124,11 +125,13 @@ public class HomeAdapter extends BaseMultiItemQuickAdapter<MultiDataItem> {
         ImageView imageView = helper.getView(R.id.daily_iv);
 
         // 图片
-        if (TextUtils.isEmpty(data.getUrl())) {
+        if (TextUtils.isEmpty(data.getImageUrl())) {
             GlideUtils.displayNative(imageView, R.mipmap.img_default_gray);
         } else {
-            GlideUtils.display(imageView, data.getUrl());
+            GlideUtils.display(imageView, data.getImageUrl());
         }
+
+        helper.addOnClickListener(R.id.daily_iv);
     }
 
     /**

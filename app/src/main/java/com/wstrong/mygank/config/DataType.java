@@ -12,7 +12,8 @@ public enum DataType {
     RESOURCES(6,"拓展资源","拓展资源"),
     RECOMMEND(7,"瞎推荐","瞎推荐"),
     JS(8,"前端","前端"),
-    APP(9,"App","App");
+    APP(9,"App","App"),
+    DAILY(10,"daily","每日数据");
 
     int value;
 
@@ -43,6 +44,16 @@ public enum DataType {
         String[] names = new String[length];
 
         for (int i = 0; i < length; i++) {
+            names[i] = DataType.values()[i].getName();
+        }
+
+        return names;
+    }
+
+    public static String[] getTabNames(){
+        String[] names = new String[8];
+
+        for (int i = 0; i < 8; i++) {
             names[i] = DataType.values()[i].getName();
         }
 

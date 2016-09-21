@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import com.wstrong.mygank.utils.StatusBarCompat;
+
 import butterknife.ButterKnife;
 
 /**
@@ -22,6 +24,7 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity  {
         this.setContentView(getLayoutId());
 
         ButterKnife.bind(this);
+        StatusBarCompat.compat(this);
 
         this.initToolbar(savedInstanceState);
         this.initViews(savedInstanceState);

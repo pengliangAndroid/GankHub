@@ -17,6 +17,8 @@ public class GankData implements Serializable {
     private boolean used;
     private String who;
 
+    private String imageUrl;
+
     public String get_id() {
         return _id;
     }
@@ -89,4 +91,28 @@ public class GankData implements Serializable {
         this.who = who;
     }
 
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    @Override
+    public int hashCode() {
+        return _id.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null)
+            return false;
+        if (!(obj instanceof GankData))
+            return false;
+
+        GankData gankData = (GankData) obj;
+        return _id.equals(gankData.get_id());
+    }
 }

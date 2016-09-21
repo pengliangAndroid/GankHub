@@ -1,5 +1,6 @@
 package com.wstrong.mygank.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -13,6 +14,7 @@ import com.wstrong.mygank.adapter.MainPagerAdapter;
 import com.wstrong.mygank.base.BaseDrawerLayoutActivity;
 import com.wstrong.mygank.config.Config;
 import com.wstrong.mygank.utils.LogUtil;
+import com.wstrong.mygank.utils.StatusBarCompat;
 import com.wstrong.mygank.utils.rx.RxBus;
 
 import butterknife.Bind;
@@ -30,7 +32,7 @@ public class MainActivity extends BaseDrawerLayoutActivity {
 
     MainPagerAdapter mPagerAdapter;
 
-    Observable mRxErrorMsg;
+    Observable mRxErrorMsg,mRxShowView;
 
     @Override
     protected int getLayoutId() {
@@ -39,6 +41,7 @@ public class MainActivity extends BaseDrawerLayoutActivity {
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
+        StatusBarCompat.compat(this,getResources().getColor(R.color.colorPrimary),true);
     }
 
     @Override
@@ -63,11 +66,25 @@ public class MainActivity extends BaseDrawerLayoutActivity {
                     }
                 });
 
+
+        mRxShowView = RxBus.get().register(Config.TAG_SHOW_VIEW, String.class);
+        mRxShowView.observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<String>() {
+                    @Override
+                    public void call(String s) {
+                        LogUtil.d("mRxShowView:"+s);
+                        showSnack(s);
+                    }
+                });
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        RxBus.get().unregister(Config.TAG_SERVER_ERROR,mRxErrorMsg);
+        RxBus.get().unregister(Config.TAG_SHOW_VIEW,mRxShowView);
+
         LogUtil.d("MainActivity onDestroy.");
     }
 
@@ -83,7 +100,14 @@ public class MainActivity extends BaseDrawerLayoutActivity {
 
                     mDrawerLayout.closeDrawer(mNavigationView);
                     return true;
-                } else {
+                } else if(item.getItemId() == R.id.nav_site){
+                    //menuItemChecked(R.id.nav_home);
+                    startActivity(new Intent(MainActivity.this,SiteActivity.class));
+                    return true;
+                }  else if(item.getItemId() == R.id.nav_favorite){
+                    startActivity(new Intent(MainActivity.this,CollectionActivity.class));
+                    return true;
+                }else {
                     return menuItemChecked(item.getItemId());
                 }
             }
@@ -110,13 +134,17 @@ public class MainActivity extends BaseDrawerLayoutActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_gank:
-                WebViewActivity.toUrl(this, Constants.BASE_URL_SITE);
+                WebViewActivity.toUrl(this, Constants.BASE_URL_SITE,"干货集中营");
                 return true;
             case R.id.action_github:
-                WebViewActivity.toUrl(this, Constants.GITHUB_TRENDING);
+                WebViewActivity.toUrl(this, Constants.GITHUB_TRENDING,"热门Github仓库");
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void showSnack(String message) {
+
     }
 
 }

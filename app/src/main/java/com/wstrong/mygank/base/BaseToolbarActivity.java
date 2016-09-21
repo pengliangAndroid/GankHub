@@ -24,9 +24,7 @@
 
 package com.wstrong.mygank.base;
 
-import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -40,7 +38,7 @@ public abstract class BaseToolbarActivity extends BaseAppCompatActivity {
     //@Bind(R.id.app_layout) protected AppBarLayout mAppBarLayout;
     protected Toolbar mToolbar;
 
-    protected AppBarLayout mAppBarLayout;
+    //protected AppBarLayout mAppBarLayout;
 
     protected ActionBarHelper mActionBarHelper;
 
@@ -57,7 +55,7 @@ public abstract class BaseToolbarActivity extends BaseAppCompatActivity {
     @Override
     protected void initToolbar(Bundle savedInstanceState) {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mAppBarLayout = (AppBarLayout) findViewById(R.id.app_layout);
+        //mAppBarLayout = (AppBarLayout) findViewById(R.id.app_layout);
 
         this.initToolbarHelper();
     }
@@ -67,7 +65,7 @@ public abstract class BaseToolbarActivity extends BaseAppCompatActivity {
      * init the toolbar
      */
     protected void initToolbarHelper() {
-        if (this.mToolbar == null || this.mAppBarLayout == null) return;
+        //if (this.mToolbar == null || this.mAppBarLayout == null) return;
 
         this.setSupportActionBar(this.mToolbar);
 
@@ -107,11 +105,11 @@ public abstract class BaseToolbarActivity extends BaseAppCompatActivity {
      *
      * @param alpha alpha
      */
-    protected void setAppBarLayoutAlpha(float alpha) {
+   /* protected void setAppBarLayoutAlpha(float alpha) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             this.mAppBarLayout.setAlpha(alpha);
         }
-    }
+    }*/
 
 
     /**
@@ -119,11 +117,13 @@ public abstract class BaseToolbarActivity extends BaseAppCompatActivity {
      *
      * @param visibility visibility
      */
-    protected void setAppBarLayoutVisibility(boolean visibility) {
+   protected void setAppBarLayoutVisibility(boolean visibility) {
         if (visibility) {
-            this.mAppBarLayout.setVisibility(View.VISIBLE);
+            //this.mAppBarLayout.setVisibility(View.VISIBLE);
+            this.mToolbar.setVisibility(View.VISIBLE);
         } else {
-            this.mAppBarLayout.setVisibility(View.GONE);
+            //this.mAppBarLayout.setVisibility(View.GONE);
+            this.mToolbar.setVisibility(View.GONE);
         }
     }
 

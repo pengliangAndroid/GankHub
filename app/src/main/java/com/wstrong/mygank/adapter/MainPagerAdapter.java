@@ -22,7 +22,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
     public MainPagerAdapter(FragmentManager manager){
         super(manager);
 
-        mTabNames = DataType.getAllNames();
+        mTabNames = DataType.getTabNames();
 
         mFragmentList = new ArrayList<>();
 
@@ -34,7 +34,6 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
         mFragmentList.add(HomeFragment.newInstance(DataType.RESOURCES.getCategory(), DataType.getMultiType(DataType.RESOURCES)));
         mFragmentList.add(HomeFragment.newInstance(DataType.RECOMMEND.getCategory(), DataType.getMultiType(DataType.RECOMMEND)));
         mFragmentList.add(HomeFragment.newInstance(DataType.JS.getCategory(), DataType.getMultiType(DataType.JS)));
-        mFragmentList.add(HomeFragment.newInstance(DataType.APP.getCategory(), DataType.getMultiType(DataType.APP)));
     }
 
     @Override

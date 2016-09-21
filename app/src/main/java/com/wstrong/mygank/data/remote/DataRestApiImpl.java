@@ -1,7 +1,7 @@
 package com.wstrong.mygank.data.remote;
 
 import com.wstrong.mygank.config.Config;
-import com.wstrong.mygank.data.model.GankDailyDataResp;
+import com.wstrong.mygank.data.model.GankDailyData;
 import com.wstrong.mygank.data.model.GankData;
 import com.wstrong.mygank.data.model.GankDataResp;
 import com.wstrong.mygank.data.model.GankSearchDataResp;
@@ -38,7 +38,7 @@ public class DataRestApiImpl extends BaseRestApi{
                 });
     }
 
-    public Observable<GankDailyDataResp> getDailyData(int year, int month, int day){
+    public Observable<GankDailyData> getDailyData(int year, int month, int day){
         return mDataRestService.getDailyData(year,month,day);
     }
 

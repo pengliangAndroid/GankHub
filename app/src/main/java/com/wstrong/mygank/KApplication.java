@@ -20,10 +20,10 @@ public class KApplication extends Application {
 
         //初始化数据源管理
         DataManager.getInstance().init(this);
+
     }
 
     private void initThirdSDK() {
-
     }
 
 
