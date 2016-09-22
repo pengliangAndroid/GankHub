@@ -10,6 +10,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.wstrong.mygank.R;
 import com.wstrong.mygank.adapter.SiteAdapter;
 import com.wstrong.mygank.base.BaseToolbarActivity;
+import com.wstrong.mygank.utils.DeviceUtils;
 import com.wstrong.mygank.widget.CustomLinearLayoutManager;
 import com.wstrong.mygank.widget.DividerItemDecoration;
 
@@ -17,6 +18,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import butterknife.Bind;
+import de.keyboardsurfer.android.widget.crouton.Configuration;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 public class SiteActivity extends BaseToolbarActivity {
 
@@ -87,6 +91,8 @@ public class SiteActivity extends BaseToolbarActivity {
                 WebViewActivity.toUrl(SiteActivity.this,studySites[position],studySiteNames[position]);
             }
         });
+
+        showCrouton("hhhhhhhhhhhhhh");
     }
 
     @Override
@@ -102,6 +108,18 @@ public class SiteActivity extends BaseToolbarActivity {
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
+    }
+
+    public void showCrouton(String content) {
+        Style style =  new Style.Builder()
+                .setHeight(DeviceUtils.dp2px(this,32))
+                .setBackgroundColorValue(getResources().getColor(R.color.core_color_light))
+                .build();
+
+        Crouton crouton = Crouton.makeText(this,content,style,R.id.toolbar);
+        Configuration configuration = new Configuration.Builder().setDuration(1500).build();
+        crouton.setConfiguration(configuration);
+        crouton.show();
     }
 
 }

@@ -20,7 +20,7 @@ public class StatusBarCompat
     private static final int COLOR_TRANSPARENT = Color.parseColor("#00000000");
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public static void compat(Activity activity, int statusColor,boolean hasDrawerLayout)
+    public static void compat(Activity activity, int statusColor)
     {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
@@ -32,9 +32,7 @@ public class StatusBarCompat
                 }else{
                     activity.getWindow().setStatusBarColor(statusColor);
                 }*/
-                if(hasDrawerLayout) {
-                    activity.getWindow().setStatusBarColor(COLOR_DEFAULT);
-                }
+                activity.getWindow().setStatusBarColor(statusColor);
             }
             return;
         }
@@ -56,14 +54,10 @@ public class StatusBarCompat
 
     }
 
+
     public static void compat(Activity activity)
     {
-        compat(activity,false);
-    }
-
-    public static void compat(Activity activity,boolean hasDrawerLayout)
-    {
-        compat(activity,COLOR_DEFAULT,hasDrawerLayout);
+        compat(activity,COLOR_DEFAULT);
     }
 
 

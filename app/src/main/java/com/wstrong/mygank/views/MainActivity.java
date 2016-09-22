@@ -15,7 +15,6 @@ import com.wstrong.mygank.adapter.MainPagerAdapter;
 import com.wstrong.mygank.base.BaseDrawerLayoutActivity;
 import com.wstrong.mygank.config.Config;
 import com.wstrong.mygank.utils.LogUtil;
-import com.wstrong.mygank.utils.StatusBarCompat;
 import com.wstrong.mygank.utils.rx.RxBus;
 
 import butterknife.Bind;
@@ -37,12 +36,12 @@ public class MainActivity extends BaseDrawerLayoutActivity {
 
     @Override
     protected int getLayoutId() {
+        //setStatusCompat(false);
         return R.layout.activity_main;
     }
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
-        StatusBarCompat.compat(this,getResources().getColor(R.color.colorPrimary),true);
     }
 
     @Override

@@ -18,18 +18,25 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity  {
 
     protected ProgressDialog progressDialog;
 
+    protected boolean isStatusCompat = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(getLayoutId());
 
         ButterKnife.bind(this);
-        StatusBarCompat.compat(this);
+        if (isStatusCompat)
+            StatusBarCompat.compat(this);
 
         this.initToolbar(savedInstanceState);
         this.initViews(savedInstanceState);
         this.initData();
         this.initListener();
+    }
+
+    public void setStatusCompat(boolean statusCompat) {
+        isStatusCompat = statusCompat;
     }
 
     protected abstract int getLayoutId();

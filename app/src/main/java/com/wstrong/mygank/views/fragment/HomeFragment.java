@@ -223,7 +223,7 @@ public class HomeFragment extends LazyFragment implements HomeView, SwipeRefresh
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    onGetDataSuccess(new ArrayList<GankData>());
+                    onRefreshDataSuccess(new ArrayList<GankData>());
                 }
             },1500);
         }
@@ -276,6 +276,9 @@ public class HomeFragment extends LazyFragment implements HomeView, SwipeRefresh
         }else{
             mAdapter.addData(tmpList);
         }
+
+        mSwipeRefreshLayout.setRefreshing(false);
+
     }
 
     @Override
@@ -291,7 +294,6 @@ public class HomeFragment extends LazyFragment implements HomeView, SwipeRefresh
             mAdapter.showLoadMoreFailedView();
         }
 
-        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
