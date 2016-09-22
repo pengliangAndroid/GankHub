@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.umeng.analytics.MobclickAgent;
 import com.wstrong.mygank.R;
 import com.wstrong.mygank.adapter.SiteAdapter;
 import com.wstrong.mygank.base.BaseToolbarActivity;
@@ -90,6 +91,17 @@ public class SiteActivity extends BaseToolbarActivity {
 
     @Override
     protected void initListener() {
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
 }

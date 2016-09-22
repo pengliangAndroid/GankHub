@@ -20,6 +20,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.bumptech.glide.request.target.Target;
+import com.umeng.analytics.MobclickAgent;
 import com.wstrong.mygank.R;
 import com.wstrong.mygank.base.BaseToolbarActivity;
 import com.wstrong.mygank.presenter.PicturePresenter;
@@ -202,5 +203,15 @@ public class PictureActivity extends BaseToolbarActivity implements PictureView{
     @Override
     public void onDownloadImageFail(String error) {
        showToast(error);
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

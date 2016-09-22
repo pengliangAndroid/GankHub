@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wstrong.mygank.Constants;
 import com.wstrong.mygank.R;
 import com.wstrong.mygank.adapter.MainPagerAdapter;
@@ -145,6 +146,17 @@ public class MainActivity extends BaseDrawerLayoutActivity {
 
     public void showSnack(String message) {
 
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
 }

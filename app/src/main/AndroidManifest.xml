@@ -6,6 +6,10 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+
     <application
         android:name=".KApplication"
         android:allowBackup="true"
@@ -32,6 +36,9 @@
         <activity android:name=".views.PictureActivity"></activity>
         <activity android:name=".views.SiteActivity"></activity>
         <activity android:name=".views.CollectionActivity"></activity>
+
+        <meta-data android:value="${UMENG_APPKEY}" android:name="UMENG_APPKEY"></meta-data>
+        <meta-data android:value="${UMENG_CHANNEL}" android:name="UMENG_CHANNEL"></meta-data>
     </application>
 
 </manifest>

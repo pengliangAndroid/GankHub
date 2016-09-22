@@ -16,6 +16,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wstrong.mygank.R;
 import com.wstrong.mygank.base.BaseToolbarActivity;
 import com.wstrong.mygank.data.model.Collection;
@@ -335,5 +336,16 @@ public class WebViewActivity extends BaseToolbarActivity implements WebViewView{
     @Override
     public void onDeleteCollectionFail(String error) {
         showToast(error);
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }
