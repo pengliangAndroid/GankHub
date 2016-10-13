@@ -20,10 +20,10 @@ import com.wstrong.mygank.data.model.GankDailyData;
 import com.wstrong.mygank.data.model.GankData;
 import com.wstrong.mygank.presenter.HomePresenter;
 import com.wstrong.mygank.presenter.iview.HomeView;
+import com.wstrong.mygank.utils.CroutonUtils;
 import com.wstrong.mygank.utils.DeviceUtils;
 import com.wstrong.mygank.utils.LogUtil;
 import com.wstrong.mygank.utils.rx.RxBus;
-import com.wstrong.mygank.views.MainActivity;
 import com.wstrong.mygank.views.PictureActivity;
 import com.wstrong.mygank.views.WebViewActivity;
 import com.wstrong.mygank.widget.BorderDividerItemDecoration;
@@ -34,9 +34,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import de.keyboardsurfer.android.widget.crouton.Configuration;
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
 
 
 /**
@@ -44,7 +41,7 @@ import de.keyboardsurfer.android.widget.crouton.Style;
  */
 public class HomeFragment extends LazyFragment implements HomeView, SwipeRefreshLayout.OnRefreshListener {
     private static final String ARGUMENT_CATEGORY = "ARGUMENT_CATEGORY";
-    private static final String ARGUMENT_MULTITYPE = "ARGUMENT_MULTITYPE";
+    private static final String ARGUMENT_MULTI_TYPE = "ARGUMENT_MULTI_TYPE";
 
     @Bind(R.id.view_placeholder)
     View mViewLayout;
@@ -73,7 +70,7 @@ public class HomeFragment extends LazyFragment implements HomeView, SwipeRefresh
         HomeFragment homeFragment = new HomeFragment();
         Bundle bundle = new Bundle();
         bundle.putString(ARGUMENT_CATEGORY, category);
-        bundle.putInt(ARGUMENT_MULTITYPE, multiType);
+        bundle.putInt(ARGUMENT_MULTI_TYPE, multiType);
         homeFragment.setArguments(bundle);
         return homeFragment;
     }
@@ -257,7 +254,7 @@ public class HomeFragment extends LazyFragment implements HomeView, SwipeRefresh
     }
 
     private int getDataMultiType(){
-        return getArguments().getInt(ARGUMENT_MULTITYPE);
+        return getArguments().getInt(ARGUMENT_MULTI_TYPE);
     }
 
     @Override
@@ -337,16 +334,15 @@ public class HomeFragment extends LazyFragment implements HomeView, SwipeRefresh
     }
 
     private void showUpdateNumInfo(int size) {
-        String str;
+        String result;
 
         if(size == 0){
-            str = "没有更新";
+            result = "没有更新";
         }else{
-            str = "有"+size+"条更新";
+            result = "有"+size+"条更新";
         }
 
-        //6.0显示不出来，待解决
-        showCrouton(str);
+        CroutonUtils.showCrouton(getActivity(),result,R.id.rl_main);
     }
 
     @Override
@@ -360,15 +356,4 @@ public class HomeFragment extends LazyFragment implements HomeView, SwipeRefresh
         RxBus.get().post(Config.TAG_SHOW_VIEW,msg);
     }
 
-    public void showCrouton(String content) {
-        Style style =  new Style.Builder()
-                .setHeight(DeviceUtils.dp2px(getActivity(),32))
-                .setBackgroundColorValue(getResources().getColor(R.color.core_color_light))
-                .build();
-
-        Crouton crouton = Crouton.makeText(((MainActivity)getActivity()),content,style,R.id.rl_main);
-        Configuration configuration = new Configuration.Builder().setDuration(1500).build();
-        crouton.setConfiguration(configuration);
-        crouton.show();
-    }
 }

@@ -10,7 +10,6 @@ import com.umeng.analytics.MobclickAgent;
 import com.wstrong.mygank.R;
 import com.wstrong.mygank.adapter.SiteAdapter;
 import com.wstrong.mygank.base.BaseToolbarActivity;
-import com.wstrong.mygank.utils.DeviceUtils;
 import com.wstrong.mygank.widget.CustomLinearLayoutManager;
 import com.wstrong.mygank.widget.DividerItemDecoration;
 
@@ -18,9 +17,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import butterknife.Bind;
-import de.keyboardsurfer.android.widget.crouton.Configuration;
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
 
 public class SiteActivity extends BaseToolbarActivity {
 
@@ -34,7 +30,6 @@ public class SiteActivity extends BaseToolbarActivity {
     String[] studySites = new String[]{
             "http://gold.xitu.io/",
             "http://www.jcodecraeer.com/plus/list.php?tid=16",
-            "https://github.com/",
             "http://blog.csdn.net/guolin_blog",
             "http://blog.csdn.net/lmj623565791",
             "http://blog.csdn.net/singwhatiwanna",
@@ -49,7 +44,6 @@ public class SiteActivity extends BaseToolbarActivity {
     String[] studySiteNames = new String[]{
             "掘金专栏",
             "泡在网上的日子",
-            "Github",
             "http://blog.csdn.net/guolin_blog",
             "http://blog.csdn.net/lmj623565791",
             "http://blog.csdn.net/singwhatiwanna",
@@ -92,7 +86,6 @@ public class SiteActivity extends BaseToolbarActivity {
             }
         });
 
-        showCrouton("hhhhhhhhhhhhhh");
     }
 
     @Override
@@ -110,16 +103,5 @@ public class SiteActivity extends BaseToolbarActivity {
         MobclickAgent.onPause(this);
     }
 
-    public void showCrouton(String content) {
-        Style style =  new Style.Builder()
-                .setHeight(DeviceUtils.dp2px(this,32))
-                .setBackgroundColorValue(getResources().getColor(R.color.core_color_light))
-                .build();
-
-        Crouton crouton = Crouton.makeText(this,content,style,R.id.toolbar);
-        Configuration configuration = new Configuration.Builder().setDuration(1500).build();
-        crouton.setConfiguration(configuration);
-        crouton.show();
-    }
 
 }
