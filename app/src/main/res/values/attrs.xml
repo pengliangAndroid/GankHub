@@ -11,4 +11,12 @@
             <enum name="heightWidth" value="2266" />
         </attr>
     </declare-styleable>
+
+
+<!--    <attr name="colorPrimary" format="color" />
+    <attr name="colorPrimaryDark" format="color" />
+    <attr name="colorAccent" format="color" />-->
+
+    <attr name="list_background" format="reference" />
+    <attr name="text_color" format="color" />
 </resources>

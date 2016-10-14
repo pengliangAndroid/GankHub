@@ -15,7 +15,7 @@ public class Constants {
     public static final String BASE_SEARCH_URL = "http://gank.io/api/search/query/listview/category/";
     public static final String GITHUB_TRENDING = "https://github.com/trending?l=java";
 
-    public static final String UNKNOWN_ERROR = "未知异常，请检查网络重试";
-    public static final String UNKNOWN_GET_ERROR = "获取数据失败，请刷新重试";
+    public static final String UNKNOWN_ERROR = "网络异常，请刷新重试";
+    //public static final String UNKNOWN_GET_ERROR = "获取数据失败，请刷新重试";
     public static final String UNKNOWN_DOWNLOAD_ERROR = "下载失败，请重新下载";
 }

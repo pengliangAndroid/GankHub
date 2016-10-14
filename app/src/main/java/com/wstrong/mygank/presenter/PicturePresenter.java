@@ -38,11 +38,7 @@ public class PicturePresenter extends BasePresenter<PictureView> {
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e != null) {
-                            getMvpView().onDownloadImageFail(Constants.UNKNOWN_GET_ERROR);
-                        }else{
                             getMvpView().onDownloadImageFail(Constants.UNKNOWN_ERROR);
-                        }
                     }
 
                     @Override
@@ -105,11 +101,7 @@ public class PicturePresenter extends BasePresenter<PictureView> {
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e != null) {
-                            getMvpView().onShareImageFail(Constants.UNKNOWN_GET_ERROR);
-                        }else{
                             getMvpView().onShareImageFail(Constants.UNKNOWN_ERROR);
-                        }
                     }
 
                     @Override

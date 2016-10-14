@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimary">#ff0aa284</color>
     <color name="colorPrimaryDark">#ff0aa284</color>
+
     <color name="PrimaryDark">#ff077c65</color>
     <color name="colorAccent">#ff0aa284</color>
     <color name="core_color_light">#ff07c59f</color>
@@ -25,5 +26,12 @@
     <color name="common_title_tv">#ff000000</color>
     <color name="common_item_via">#ffA8A8A8</color>
 
+    <color name="text_color_light">#ff333333</color>
+    <color name="text_color_night">#ffc2c2c2</color>
 
+    <color name="list_background">#fff5f5f5</color>
+    <color name="list_background_night">#ff303030</color>
+
+    <color name="actionbar_bg">#ff0aa284</color>
+    <color name="actionbar_bg_night">#ff121212</color>
 </resources>

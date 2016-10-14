@@ -11,6 +11,7 @@ import com.wstrong.mygank.data.model.GankDailyData;
 import com.wstrong.mygank.data.model.GankData;
 import com.wstrong.mygank.presenter.iview.HomeView;
 import com.wstrong.mygank.utils.DateUtils;
+import com.wstrong.mygank.utils.LogUtil;
 import com.wstrong.mygank.utils.RxUtils;
 
 import java.io.Serializable;
@@ -79,19 +80,19 @@ public class HomePresenter extends BasePresenter<HomeView> {
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e != null) {
-                            getMvpView().onGetDailyDataFail(Log.getStackTraceString(e));
-                        }else{
-                            getMvpView().onGetDataFail(Constants.UNKNOWN_ERROR);
-                        }
+                        getMvpView().onGetDataFail(Constants.UNKNOWN_ERROR);
+                        LogUtil.d(Log.getStackTraceString(e));
                     }
 
                     @Override
                     public void onNext(List<GankData> dataList) {
-
                         getMvpView().onGetDataSuccess(dataList);
                     }
                 }));
+    }
+
+    public List<GankData> getLocalDataList(){
+        return mDataManager.getLocalGankDataList();
     }
 
     /**
@@ -138,11 +139,8 @@ public class HomePresenter extends BasePresenter<HomeView> {
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e != null) {
-                            getMvpView().onGetDailyDataFail(Log.getStackTraceString(e));
-                        }else{
-                            getMvpView().onRefreshDataFail(Constants.UNKNOWN_ERROR);
-                        }
+                        getMvpView().onGetDataFail(Constants.UNKNOWN_ERROR);
+                        LogUtil.d(Log.getStackTraceString(e));
                     }
 
                     @Override
@@ -161,7 +159,7 @@ public class HomePresenter extends BasePresenter<HomeView> {
         Observable<List<GankData>> welfareObservable = mDataManager.
                 getCategoryData(DataType.WELFARE.getCategory(),PAGE_SIZE,mCurPage);
 
-        Observable<List<GankData>>  dataObservable = mDataManager
+        Observable<List<GankData>> dataObservable = mDataManager
                 .getCategoryData(mCategory, PAGE_SIZE, mCurPage);
 
         mCompositeSubscription
@@ -178,6 +176,11 @@ public class HomePresenter extends BasePresenter<HomeView> {
                                         return o2.getPublishedAt().compareTo(o1.getPublishedAt());
                                     }
                                 });
+
+                                if(mCurPage == 1){
+
+                                    saveLocalDataList(dataList);
+                                }
                                 return dataList;
                             }
                         })
@@ -192,15 +195,13 @@ public class HomePresenter extends BasePresenter<HomeView> {
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e != null) {
-                            getMvpView().onGetDataFail(Constants.UNKNOWN_GET_ERROR);
-                        }else{
-                            getMvpView().onGetDataFail(Constants.UNKNOWN_ERROR);
-                        }
+                        getMvpView().onGetDataFail(Constants.UNKNOWN_ERROR);
+                        LogUtil.d(Log.getStackTraceString(e));
                     }
 
                     @Override
                     public void onNext(List<GankData> dataList) {
+
                         getMvpView().onGetDataSuccess(dataList);
                     }
                 }));
@@ -241,11 +242,8 @@ public class HomePresenter extends BasePresenter<HomeView> {
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e != null) {
-                            getMvpView().onGetDailyDataFail(Log.getStackTraceString(e));
-                        }else{
-                            getMvpView().onGetDataFail(Constants.UNKNOWN_ERROR);
-                        }
+                        getMvpView().onGetDataFail(Constants.UNKNOWN_ERROR);
+                        LogUtil.d(Log.getStackTraceString(e));
                     }
 
                     @Override
@@ -256,6 +254,11 @@ public class HomePresenter extends BasePresenter<HomeView> {
 
 
     }
+
+    public void saveLocalDataList(List<GankData> dataList){
+        mDataManager.saveLocalDataList(dataList);
+    }
+
 
     /**
      * 过去多少天的日期集合
@@ -299,6 +302,10 @@ public class HomePresenter extends BasePresenter<HomeView> {
 
     public int getCurPage() {
         return mCurPage;
+    }
+
+    public void setCurPage(int curPage) {
+        this.mCurPage = curPage;
     }
 
     public boolean isHasMoreData() {

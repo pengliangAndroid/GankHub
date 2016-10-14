@@ -96,11 +96,7 @@ public class MainActivity extends BaseDrawerLayoutActivity {
 
                     mDrawerLayout.closeDrawer(mNavigationView);
                     return true;
-                } else if (item.getItemId() == R.id.nav_read_mode) {
-
-                    mDrawerLayout.closeDrawer(mNavigationView);
-                    return true;
-                } else if(item.getItemId() == R.id.nav_site){
+                }  else if(item.getItemId() == R.id.nav_site){
                     //menuItemChecked(R.id.nav_home);
                     startActivity(new Intent(MainActivity.this,SiteActivity.class));
                     return true;

@@ -34,4 +34,21 @@
         <item name="cardElevation">@dimen/card_elevation</item>
     </style>
 
+
+    <style name="LightTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/actionbar_bg</item>
+        <item name="colorPrimaryDark">@color/actionbar_bg</item>
+
+        <item name="list_background">@color/list_background</item>
+        <item name="text_color">@color/text_color_light</item>
+    </style>
+
+    <style name="NightTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/actionbar_bg_night</item>
+        <item name="colorPrimaryDark">@color/actionbar_bg_night</item>
+
+        <item name="list_background">@color/list_background_night</item>
+        <item name="text_color">@color/text_color_night</item>
+    </style>
+
 </resources>
